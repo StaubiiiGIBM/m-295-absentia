@@ -2,12 +2,14 @@ package ch.schaub.leon.absentia.employee;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@Validated
 public class EmployeeController {
 
     private final EmployeeService employeeService;
