@@ -1,0 +1,13 @@
+server:
+  port: 1010
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    generate-ddl: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/m-295-absentia
+    username: postgres
+    password: 123456789
+    driver-class-name: org.postgresql.Driver
