@@ -12,7 +12,7 @@ import lombok.Data;
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
     @Column(unique = true, nullable = false, length = 3)
     @Size(min = 2, max = 3)
     @NotEmpty
