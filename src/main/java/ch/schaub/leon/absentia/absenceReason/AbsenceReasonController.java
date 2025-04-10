@@ -1,6 +1,11 @@
 package ch.schaub.leon.absentia.absenceReason;
 
+import io.swagger.v3.oas.annotations.*;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -10,36 +15,66 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @Validated
+@Tag(name = "Absenzgründe", description = "Absenzgründe ansehen, erstellen, editieren und löschen")
 public class AbsenceReasonController {
 
     private final AbsenceReasonService absenceReasonService;
 
     @GetMapping("/absenceReason/{id}")
-    public ResponseEntity<AbsenceReason> getAbsenceReason(@PathVariable int id) {
+    @Operation(summary = "Gibt einen spezifischen Absenzgrund zurück")
+    @ApiResponse(responseCode = "200")
+    public ResponseEntity<AbsenceReason> getAbsenceReason(
+            @Parameter(description = "Die Id des zu suchenden Absenzgrund")
+            @PathVariable
+            int id
+    ) {
         return ResponseEntity.ok(absenceReasonService.getAbsenceReason(id));
     }
 
     @GetMapping("/absenceReason")
+    @Operation(summary = "Gibt alle Absenzgründe zurück")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<List<AbsenceReason>> getAllAbsenceReason() {
         List<AbsenceReason> absenceReasonList = absenceReasonService.getAllAbsenceReasons();
         return ResponseEntity.ok(absenceReasonList);
     }
 
     @PostMapping("/absenceReason/add")
-    public ResponseEntity<AbsenceReason> addAbsenceReason(@Validated @RequestBody AbsenceReason absenceReason) {
+    @Operation(summary = "Fügt einen Absenzgrund hinzu")
+    @ApiResponse(responseCode = "200")
+    public ResponseEntity<AbsenceReason> addAbsenceReason(
+            @Parameter(description = "Der inhalt des Absenzgrund")
+            @Validated
+            @RequestBody
+            AbsenceReason absenceReason
+    ) {
         AbsenceReason newAbsenceReason = absenceReasonService.addAbsenceReason(absenceReason);
         return ResponseEntity.ok(newAbsenceReason);
     }
 
     @PutMapping("/absenceReason/edit/{id}")
+    @Operation(summary = "Editiert einen spezifischen Absenzgrund")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<AbsenceReason> editAbsenceReason(
-            @Validated @RequestBody AbsenceReason absenceReason, @PathVariable int id
+            @Parameter(description = "Der neue Inhalt des Absenzgrund")
+            @Validated
+            @RequestBody
+            AbsenceReason absenceReason,
+            @Parameter(description = "Die Id des alten Absenzgrund")
+            @PathVariable
+            int id
     ) {
         return ResponseEntity.ok(absenceReasonService.updateAbsenceReason(absenceReason, id));
     }
 
     @DeleteMapping("/absenceReason/delete/{id}")
-    public String deleteAbsenceReason(@PathVariable int id) {
+    @Operation(summary = "Löscht einen spezifischen Absenzgrund")
+    @ApiResponse(responseCode = "200")
+    public String deleteAbsenceReason(
+            @Parameter(description = "Die Id des zu löschenden Absenzgrund")
+            @PathVariable
+            int id
+    ) {
         return absenceReasonService.deleteAbsenceReason(id);
     }
 }
