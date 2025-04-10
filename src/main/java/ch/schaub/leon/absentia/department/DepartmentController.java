@@ -1,9 +1,13 @@
 package ch.schaub.leon.absentia.department;
 
+import ch.schaub.leon.absentia.security.Roles;
+
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -14,6 +18,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@SecurityRequirement(name = "bearerAuth")
 @Validated
 @Tag(name = "Abteilungen", description = "Abteilungen ansehen, erstellen, editieren und löschen")
 public class DepartmentController {
@@ -23,6 +28,7 @@ public class DepartmentController {
     @GetMapping("/department/{id}")
     @Operation(summary = "Gibt eine spezifische Abteilung zurück")
     @ApiResponse(responseCode = "200")
+    @RolesAllowed(Roles.User)
     public ResponseEntity<Department> getDepartment(
             @Parameter(description = "Die Id der zu suchenden Abteilung")
             @PathVariable
@@ -35,6 +41,7 @@ public class DepartmentController {
     @GetMapping("/department")
     @Operation(summary = "Gibt alle Abteilungen zurück")
     @ApiResponse(responseCode = "200")
+    @RolesAllowed(Roles.User)
     public ResponseEntity<List<Department>> getAllDepartments() {
         List<Department> departments = departmentService.getAllDepartments();
         return ResponseEntity.ok(departments);
@@ -43,6 +50,7 @@ public class DepartmentController {
     @PostMapping("/department/add")
     @Operation(summary = "Fügt eine Abteilung hinzu")
     @ApiResponse(responseCode = "200")
+    @RolesAllowed(Roles.User)
     public ResponseEntity<Department> addDepartment(
             @Parameter(description = "Der Inhalt der Abteilung")
             @Validated
@@ -56,6 +64,7 @@ public class DepartmentController {
     @PutMapping("/department/edit/{id}")
     @Operation(summary = "Editiert eine spezifische Abteilung")
     @ApiResponse(responseCode = "200")
+    @RolesAllowed(Roles.Admin)
     public ResponseEntity<Department> editDepartment(
             @Parameter(description = "Der neue Inhalt der Abteilung")
             @Validated
@@ -71,6 +80,7 @@ public class DepartmentController {
     @DeleteMapping("/department/delete/{id}")
     @Operation(summary = "Löscht eine spezifische Abteilung")
     @ApiResponse(responseCode = "200")
+    @RolesAllowed(Roles.Admin)
     public String deleteDepartment(
             @Parameter(description = "Die Id der zu löschenden Abteilung")
             @PathVariable

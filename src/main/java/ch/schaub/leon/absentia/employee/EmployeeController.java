@@ -1,9 +1,13 @@
 package ch.schaub.leon.absentia.employee;
 
+import ch.schaub.leon.absentia.security.Roles;
+
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -14,6 +18,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@SecurityRequirement(name = "bearerAuth")
 @Validated
 @Tag(name = "Mitarbeiter", description = "Mitarbeiter ansehen, erstellen, editieren und löschen")
 public class EmployeeController {
@@ -23,6 +28,7 @@ public class EmployeeController {
     @GetMapping("/employee/{id}")
     @Operation(summary = "Gibt einen spezifischen Mitarbeiter zurück")
     @ApiResponse(responseCode = "200")
+    @RolesAllowed(Roles.User)
     public ResponseEntity<Employee> getEmployee(
             @Parameter(description = "Die id des zu suchenden Mitarbeiter")
             @PathVariable
@@ -34,6 +40,7 @@ public class EmployeeController {
     @GetMapping("/employee")
     @Operation(summary = "Gibt alle Mitarbeiter zurück")
     @ApiResponse(responseCode = "200")
+    @RolesAllowed(Roles.User)
     public ResponseEntity<List<Employee>> getEmployees() {
         List<Employee> employeeList = employeeService.getAllEmployees();
         return ResponseEntity.ok(employeeList);
@@ -42,6 +49,7 @@ public class EmployeeController {
     @PostMapping("/employee/add")
     @Operation(summary = "Fügt einen Mitarbeiter hinzu")
     @ApiResponse(responseCode = "200")
+    @RolesAllowed(Roles.User)
     public ResponseEntity<Employee> addEmployee(
             @Parameter(description = "Der Inhalt des Mitarbeiter")
             @Validated
@@ -55,6 +63,7 @@ public class EmployeeController {
     @PutMapping("/employee/edit/{id}")
     @Operation(summary = "Editiert einen spezifische Mitarbeiter")
     @ApiResponse(responseCode = "200")
+    @RolesAllowed(Roles.Admin)
     public ResponseEntity<Employee> editEmployee(
             @Parameter(description = "Der neue Inhalt des Mitarbeiter")
             @Validated
@@ -70,6 +79,7 @@ public class EmployeeController {
     @DeleteMapping("/employee/delete/{id}")
     @Operation(summary = "Löscht einen spezifische Mitarbeiter")
     @ApiResponse(responseCode = "200")
+    @RolesAllowed(Roles.Admin)
     public String deleteEmployee(
             @Parameter(description = "Die Id des zu löschenden Mitarbeiter")
             @PathVariable

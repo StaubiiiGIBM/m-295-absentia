@@ -1,9 +1,12 @@
 package ch.schaub.leon.absentia.absence;
 
+import ch.schaub.leon.absentia.security.Roles;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -14,6 +17,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@SecurityRequirement(name = "bearerAuth")
 @Validated
 @Tag(name = "Absenzen", description = "Absenzen ansehen, erstellen, editieren und löschen")
 public class AbsenceController {
@@ -23,6 +27,7 @@ public class AbsenceController {
     @GetMapping("/absence/{id}")
     @Operation(summary = "Gibt eine spezifische Absenz zurück")
     @ApiResponse(responseCode = "200")
+    @RolesAllowed(Roles.User)
     public ResponseEntity<Absence> getAbsence(
             @Parameter(description = "Die Id der zu suchende Absenz")
             @PathVariable
@@ -34,6 +39,7 @@ public class AbsenceController {
     @GetMapping("/absence")
     @Operation(summary = "Gibt alle Absenzen zurück")
     @ApiResponse(responseCode = "200")
+    @RolesAllowed(Roles.User)
     public ResponseEntity<List<Absence>> getAllAbsences() {
         List<Absence> absenceList = absenceService.getAllAbsences();
         return ResponseEntity.ok(absenceList);
@@ -42,6 +48,7 @@ public class AbsenceController {
     @PostMapping("/absence/add")
     @Operation(summary = "Fügt eine Absenz hinzu")
     @ApiResponse(responseCode = "200")
+    @RolesAllowed(Roles.User)
     public ResponseEntity<Absence> addAbsence(
             @Parameter(description = "Der Inhalt der Absenz")
             @Validated
@@ -55,6 +62,7 @@ public class AbsenceController {
     @PutMapping("/absence/edit/{id}")
     @Operation(summary = "Editiert eine spezifische Absenz")
     @ApiResponse(responseCode = "200")
+    @RolesAllowed(Roles.Admin)
     public ResponseEntity<Absence> editAbsence(
             @Parameter(description = "Der neue Inhalt der Absenz")
             @Validated
@@ -70,6 +78,7 @@ public class AbsenceController {
     @DeleteMapping("/absence/delete/{id}")
     @Operation(summary = "Löscht eine spezifische Absenz")
     @ApiResponse(responseCode = "200")
+    @RolesAllowed(Roles.Admin)
     public String deleteAbsence(
             @Parameter(description = "Die Id der zu löschenden Absenz")
             @PathVariable
