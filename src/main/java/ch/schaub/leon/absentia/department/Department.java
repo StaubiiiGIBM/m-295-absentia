@@ -7,8 +7,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-@Table(name = "tb_departments")
 @Entity
+@Table(name = "tb_departments")
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

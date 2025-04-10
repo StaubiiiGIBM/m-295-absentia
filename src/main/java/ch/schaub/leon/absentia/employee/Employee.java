@@ -8,20 +8,20 @@ import ch.schaub.leon.absentia.department.Department;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
-@Entity
 @Data
+@Entity
 @Table(name = "tb_employees")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(length = 30, nullable = false)
-    @NotEmpty
     @Size(min = 2, max = 30)
+    @NotEmpty
     private String first_name;
     @Column(length = 30, nullable = false)
-    @NotEmpty
     @Size(min = 2, max = 30)
+    @NotEmpty
     private String last_name;
     @ManyToOne(optional = false)
     @JoinColumn(name = "department_id")
