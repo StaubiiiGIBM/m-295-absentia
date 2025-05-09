@@ -1,5 +1,6 @@
 package ch.schaub.leon.absentia.absenceReason;
 
+import ch.schaub.leon.absentia.base.MessageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +35,8 @@ public class AbsenceReasonService {
 
         return absenceReasonRepository.save(originalAbsenceReason);
     }
-    public String deleteAbsenceReason(int id) {
+    public MessageResponse deleteAbsenceReason(int id) {
         absenceReasonRepository.deleteById(id);
-        return "Absence Reason with id " + id + " deleted";
+        return new MessageResponse("Absence Reason " + id + " deleted");
     }
 }

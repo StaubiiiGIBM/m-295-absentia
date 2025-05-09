@@ -1,5 +1,6 @@
 package ch.schaub.leon.absentia.absenceReason;
 
+import ch.schaub.leon.absentia.base.MessageResponse;
 import ch.schaub.leon.absentia.security.Roles;
 
 import io.swagger.v3.oas.annotations.*;
@@ -80,7 +81,7 @@ public class AbsenceReasonController {
     @Operation(summary = "Löscht einen spezifischen Absenzgrund")
     @ApiResponse(responseCode = "200")
     @RolesAllowed(Roles.Admin)
-    public String deleteAbsenceReason(
+    public MessageResponse deleteAbsenceReason(
             @Parameter(description = "Die Id des zu löschenden Absenzgrund")
             @PathVariable
             int id

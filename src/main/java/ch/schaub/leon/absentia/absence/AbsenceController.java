@@ -1,5 +1,6 @@
 package ch.schaub.leon.absentia.absence;
 
+import ch.schaub.leon.absentia.base.MessageResponse;
 import ch.schaub.leon.absentia.security.Roles;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -79,7 +80,7 @@ public class AbsenceController {
     @Operation(summary = "Löscht eine spezifische Absenz")
     @ApiResponse(responseCode = "200")
     @RolesAllowed(Roles.Admin)
-    public String deleteAbsence(
+    public MessageResponse deleteAbsence(
             @Parameter(description = "Die Id der zu löschenden Absenz")
             @PathVariable
             int id

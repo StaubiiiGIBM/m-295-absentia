@@ -1,5 +1,6 @@
 package ch.schaub.leon.absentia.department;
 
+import ch.schaub.leon.absentia.base.MessageResponse;
 import ch.schaub.leon.absentia.security.Roles;
 
 import io.swagger.v3.oas.annotations.*;
@@ -81,7 +82,7 @@ public class DepartmentController {
     @Operation(summary = "Löscht eine spezifische Abteilung")
     @ApiResponse(responseCode = "200")
     @RolesAllowed(Roles.Admin)
-    public String deleteDepartment(
+    public MessageResponse deleteDepartment(
             @Parameter(description = "Die Id der zu löschenden Abteilung")
             @PathVariable
             int id

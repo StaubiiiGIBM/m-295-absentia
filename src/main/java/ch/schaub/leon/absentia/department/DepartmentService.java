@@ -1,5 +1,6 @@
 package ch.schaub.leon.absentia.department;
 
+import ch.schaub.leon.absentia.base.MessageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +36,9 @@ public class DepartmentService {
 
         return departmentRepository.save(originalDepartment);
     }
-    public String deleteDepartment(int id) {
+    public MessageResponse deleteDepartment(int id) {
         departmentRepository.deleteById(id);
-        return "Department with id " + id + " deleted";
+        return new MessageResponse("Department " + id + " deleted");
     }
 
 }

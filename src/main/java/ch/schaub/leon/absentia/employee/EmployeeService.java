@@ -1,5 +1,6 @@
 package ch.schaub.leon.absentia.employee;
 
+import ch.schaub.leon.absentia.base.MessageResponse;
 import ch.schaub.leon.absentia.department.Department;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,8 +40,8 @@ public class EmployeeService {
         return employeeRepository.save(originalEmployee);
     }
 
-    public String deleteEmployee(int id) {
+    public MessageResponse deleteEmployee(int id) {
         employeeRepository.deleteById(id);
-        return "Employee with id " + id + " deleted";
+        return new MessageResponse("Employee " + id + " deleted");
     }
 }

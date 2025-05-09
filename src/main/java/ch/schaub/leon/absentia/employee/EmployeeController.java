@@ -1,5 +1,6 @@
 package ch.schaub.leon.absentia.employee;
 
+import ch.schaub.leon.absentia.base.MessageResponse;
 import ch.schaub.leon.absentia.security.Roles;
 
 import io.swagger.v3.oas.annotations.*;
@@ -80,7 +81,7 @@ public class EmployeeController {
     @Operation(summary = "Löscht einen spezifische Mitarbeiter")
     @ApiResponse(responseCode = "200")
     @RolesAllowed(Roles.Admin)
-    public String deleteEmployee(
+    public MessageResponse deleteEmployee(
             @Parameter(description = "Die Id des zu löschenden Mitarbeiter")
             @PathVariable
             int id
